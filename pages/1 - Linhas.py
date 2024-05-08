@@ -2,12 +2,15 @@ import streamlit as st
 import json
 import pandas as pd
 import plotly.express as px
+from util import cabecalho
 
 st.set_page_config(
     "Linhas",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+cabecalho("Rahyan")
 
 with open("documentos/projeto_linhas_horarios.json", "r", encoding="utf-8") as file:
     data = json.load(file)
