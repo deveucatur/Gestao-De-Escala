@@ -1,10 +1,13 @@
 import streamlit as st
+from util import cabecalho
 
 st.set_page_config(
     "Escalas",
     layout="wide",
     initial_sidebar_state="collapsed"
 )
+
+cabecalho("Rahyan")
 
 st.title("Gestão de Escalas")
 
@@ -26,3 +29,6 @@ with col4:
     btConfig = st.button("Configurações", use_container_width=True)
     if btConfig:
         st.switch_page("pages/99 - Configurações.py")
+
+st.text_input("Texto teste")
+st.selectbox("select teste", ["teste1", "teste 2"])
