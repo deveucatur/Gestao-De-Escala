@@ -4,3 +4,4 @@ pyvenv.cfg
 etc/
 share/
 __pycache__/
+.vscode/
