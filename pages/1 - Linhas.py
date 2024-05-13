@@ -31,10 +31,10 @@ def diferenca_minutos_entre_times(objeto1, objeto2):
     return diferenca_minutos
 
 
-def seccionamento_by_lin(lin, list_datas):
+def seccionamento_by_lin(lin, list_datas, dados):
     dates_seccionament = []
     for dat in list_datas:
-        if dat.weekday() in linhas_dados[lin]['FREQUÊNCIA']:
+        if dat.weekday() in dados[lin]['FREQUÊNCIA']:
             dates_seccionament.append(dat)
 
     return dates_seccionament
@@ -47,8 +47,9 @@ def encontra_caracter(texto, caracter):
 
 
 def trata_lin(linha, dados, list_datas):
-    secc_by_lin = seccionamento_by_lin(linha, list_datas)
-
+    secc_by_lin = seccionamento_by_lin(linha, list_datas, dados)
+    
+    st.info(secc_by_lin)
     retorno = {}
     for dat_secc in secc_by_lin:
 
@@ -56,11 +57,14 @@ def trata_lin(linha, dados, list_datas):
         
             print('-'*30+direc+'-'*30)
             new_dat_inic = datetime.strptime(f"{dat_secc} {[values['HORÁRIO CHEGADA'][-8:] for key, values in value_aux.items()][0]}", '%Y-%m-%d %H:%M:%S')
+            
+            
             cont = time_by_min(new_dat_inic.time())
 
             date_aux = new_dat_inic.date()
             last_date = new_dat_inic.time()
 
+            
             for cod_secc, value in value_aux.items():
                 
                 print('-'*10+dados[linha]['PERCURSO'][direc][cod_secc]['SECCIONAMENTO']+'-'*10)
@@ -77,10 +81,11 @@ def trata_lin(linha, dados, list_datas):
                 if cont >= 1440:
                     date_aux += timedelta(days=1)
                     cont -= 1440
+
                 
                 #SUBESCREVENDO AS DATAS E HORAS COM O FORMATO CORRETO
                 retorno_hrs_chegada = f'{date_aux} {data_secc.hour}:{data_secc.minute}:00'
-
+                
                 dados[linha]['PERCURSO'][direc][cod_secc]['HORÁRIO CHEGADA'] = retorno_hrs_chegada
 
                 #TRANTANDO O DADO DE TEMPO PARADO PARA SOMAR JUNTO A HORAS CHEGADA
@@ -93,7 +98,7 @@ def trata_lin(linha, dados, list_datas):
                 print(f'PARADA {parada_time}')
                 print(f'HORA FINAL {datetime.strptime(retorno_hrs_chegada, "%Y-%m-%d %H:%M:%S") + parada_timedelta}')
 
-        retorno[dat_secc] = dados[linha]
+        retorno[str(dat_secc)] = dados[linha]
     
     return retorno
 
@@ -115,35 +120,47 @@ if date_ini is not None:
 date_fim = st.date_input('Fim', retorno)
 
 list_datas = []
-while date_ini <= date_fim:
-    list_datas.append(date_ini)
-    date_ini += timedelta(days=1)
-
-
-teste = trata_lin('09319', linhas_dados, list_datas)
-
-st.info(teste)
-linhas_func = {}
-cont = 0
-#PUXANDO SOMENTE AS LINHAS QUE ATENDEM NAQUELE PERÍODO
-for lin in linhas_dados:
+if None not in (date_ini, date_fim):
     
-    secc_by_linha = linhas_dados[lin]['FREQUÊNCIA']
+    while date_ini <= date_fim:
+        list_datas.append(date_ini)
+        date_ini += timedelta(days=1)
 
-    merge_dates = [dat for dat in list_datas if dat.weekday() in secc_by_linha]
-    if len(merge_dates) > 0: 
-        cont+= 1
-        linhas_func[lin] = linhas_dados[lin]
 
-linhaSelect = ''
-if len(linhas_func) > 0:
-    linhaSelect = st.multiselect("Linhas", list(set([f'{lin} // {value["LINHA"]}' for lin, value in linhas_func.items()])), placeholder="Escolha as linhas que deseja visualizar")
-
-if len(linhaSelect) > 0:
-    dados_select = {lin_select: linhas_func[str(str(lin_select).split('//')[0]).strip()] for lin_select in linhaSelect}
-
-    #st.write(dados_select)
-
+if len(list_datas) > 0:
     
+    linhas_func = {}
+    cont = 0
+    #PUXANDO SOMENTE AS LINHAS QUE ATENDEM NAQUELE PERÍODO
+    for lin in linhas_dados:
+        
+        secc_by_linha = linhas_dados[lin]['FREQUÊNCIA']
+
+        merge_dates = [dat for dat in list_datas if dat.weekday() in secc_by_linha]
+        if len(merge_dates) > 0: 
+            cont+= 1
+            linhas_func[lin] = linhas_dados[lin]
+
+    linhaSelect = ''
+    if len(linhas_func) > 0:
+        linhaSelect = st.multiselect("Linhas", list(set([f'{lin} // {value["LINHA"]}' for lin, value in linhas_func.items()])), placeholder="Escolha as linhas que deseja visualizar")
+
+    if len(linhaSelect) > 0:
+        dados_select = {lin_select: linhas_func[str(str(lin_select).split('//')[0]).strip()] for lin_select in linhaSelect}
+
+        dadosLinha = {}
+        for lin in linhaSelect:
+
+            st.success(f'{lin}')
+            ddLin = trata_lin(lin, dados_select, list_datas)
+
+            st.error(ddLin)
+            #dadosLinha[lin] = ddLin
+        
+        #st.write(dadosLinha)
+        #st.write(teste)
+        #st.write(dados_select)
+
+        
 
 
