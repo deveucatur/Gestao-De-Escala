@@ -11,6 +11,14 @@ st.set_page_config(
 # cabecalho("Rahyan")
 cabEscala()
 
+colAux, colBt = st.columns([4, 1])
+
+with colBt:
+    novoMot = st.button("Novo Motorista", use_container_width=True)
+
+if novoMot:
+    st.switch_page("pages/4 - novoMotorista.py")
+
 st.title("Dados dos Motoristas")
 
 planil = pd.read_excel('documentos/ProjetoMotoristas.xlsx', sheet_name='listaMotoristas')
