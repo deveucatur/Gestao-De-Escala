@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from util import cabecalho
+from util import cabEscala
 
 st.set_page_config(
     "Motoristas",
@@ -8,7 +8,8 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-cabecalho("Rahyan")
+# cabecalho("Rahyan")
+cabEscala()
 
 st.title("Dados dos Motoristas")
 

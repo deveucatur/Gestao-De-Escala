@@ -1,5 +1,5 @@
 import streamlit as st
-from util import cabecalho
+from util import cabEscala
 
 st.set_page_config(
     "Programação de Escalas",
@@ -7,6 +7,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-cabecalho("Rahyan")
+# cabecalho("Rahyan")
+cabEscala()
 
 st.title("Programação de Escalas")

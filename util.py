@@ -175,3 +175,130 @@ def cabecalho(nome):
 
     st.write(html, unsafe_allow_html=True)
     st.write(f"<style>{css}</style>", unsafe_allow_html=True)
+
+def cabEscala():
+    html = """<div class="cabecalho">
+            <div class="titulo">
+                <p>Gestão de Escalas</p>
+            </div>
+        </div>"""
+    
+    css = """.cabecalho {
+            margin: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-position: center;
+            z-index: 999990;
+            background-color: #f0f0f0;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .cabecalho .titulo {
+            position: relative;
+            z-index: 2;
+            color: #240002;
+            text-align: center;
+            background-color: #adb9a9;
+            padding: 2px;
+            border-radius: 16px;
+        }
+
+        .cabecalho .titulo p{
+            margin: 3px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        [data-testid="collapsedControl"]{
+           z-index: 999991;
+           background-color: #adb9a9;
+           height: 70px;
+           width: 100px;
+           left: 0;
+           top: 0;
+           padding: 15px;
+        }
+        
+        [data-testid="collapsedControl"] img,
+        [data-testid="stSidebar"][aria-expanded="true"] img{
+            width: 30px;
+            height: 30px;
+        }
+        
+        [data-testid="collapsedControl"] svg,
+        [data-testid="stSidebar"][aria-expanded="true"] svg{
+            height: 26px;
+            width: 26px;
+        }"""
+    st.write(f"<div>{html}</div>", unsafe_allow_html=True)
+    st.write(f"<style>{css}</style>", unsafe_allow_html=True)
+    st.logo("https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoEscaleu.png", link="http://localhost:8501/")
+
+
+# .st-ae{
+#     background-color: blue;
+# }
+
+def botaoHome(nome, img, link):
+    html = f"""<div class="botaoHome">
+            <a href="{link}" target="_self">
+                <img src="{img}" alt="Ícone para o botão de {nome}">
+                <button type="button">
+                    {nome}
+                </button>
+            </a>
+        </div>"""
+    
+    css = """.botaoHome {
+            margin: 10px;
+            text-align: center;
+            background-color: #c7d6c2;
+            padding: 8px;
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .botaoHome a {
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .botaoHome img {
+            width: 42px;
+            height: 42px;
+        }
+
+        .botaoHome button {
+            background-color: transparent;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: underline;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .botaoHome:hover{
+            background-color: #adb9a9;
+            transform: scale(1.05);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }"""
+    
+    st.write(f"<div>{html}</div>", unsafe_allow_html=True)
+    st.write(f"<style>{css}</style>", unsafe_allow_html=True)
