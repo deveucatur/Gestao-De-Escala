@@ -18,6 +18,8 @@ sql = "SELECT * FROM motoristas_lista;"
 mycursor.execute(sql)
 dadosMotorista = mycursor.fetchall()
 
+st.write(dadosMotorista)
+
 sql = """SELECT u.unidade, u.id_unidade, c.nome_cidade, c.id_cidades
     FROM unidades u
     LEFT JOIN motoristas_lista ml1 ON u.id_unidade = ml1.fgkey_unidade
@@ -31,6 +33,7 @@ mycursor.execute(sql)
 cidadesUnidades = mycursor.fetchall()
 unidades = list(set([x[0] for x in cidadesUnidades if x[0]]))
 cidades = list(set([x[2] for x in cidadesUnidades if x[2]]))
+st.write(cidadesUnidades)
 
 sql = "SELECT * FROM funcao_motorista"
 mycursor.execute(sql)
@@ -41,68 +44,120 @@ cabEscala()
 if st.button("Voltar"):
     st.switch_page("pages/2 - Motoristas.py")
 
-tituloPage("Cadastrar Motorista")
+if len(st.query_params.to_dict()) != 0:
+    st.write("acesso com parametro")
+    pageFuncao = st.query_params["funcao"]
+    idMot = st.query_params["id"]
 
-with st.form("motorista", clear_on_submit=True, border=False):
-    col1, col2 = st.columns([3, 1])
-    with col1:
-        nome = st.text_input("Nome")
-    with col2:
-        matricula = st.text_input("Matrícula")
+    st.write(idMot)
+    st.write(pageFuncao)
+    if pageFuncao == "editar":
+        tituloPage("Editar Motorista")
 
-    col1, col2 = st.columns(2)
-    with col1:
-        unidade = st.selectbox("Unidade", unidades, None, placeholder="")
-        if unidade:
-            idUnid = list(set([x[1] for x in cidadesUnidades if x[0] == unidade]))[0]
-        else:
-            idUnid = "NULL"
-    with col2:
-        cidade = st.selectbox("Cidade de Origem", cidades, None, placeholder="")
-        if cidade:
-            idCid = list(set([x[3] for x in cidadesUnidades if x[2] == cidade]))[0]
-        else:
-            idCid = "NULL"
+        with st.form("motorista", clear_on_submit=True, border=False):
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                nome = st.text_input("Nome", [x[1] for x in dadosMotorista if str(x[0]) == str(idMot)][0])
+            with col2:
+                matricula = st.text_input("Matrícula", [x[7] for x in dadosMotorista if str(x[0]) == str(idMot)][0])
 
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        funcao = st.selectbox("Função", list(set([x[1] for x in funcaoMot if x[1]])), None, placeholder="")
-        if funcao:
-            idFuncao = list(set([x[0] for x in funcaoMot if x[1] == funcao]))[0]
-        else:
-            idFuncao = "NULL"
-    with col2:
-        dtAdmissao = st.date_input("Data de Admissão", format="DD/MM/YYYY")
-    with col3:
-        status = st.selectbox("Status", ["Ativo", "Inativo"])
-        status = 1 if status == "Ativo" else 0
+            col1, col2 = st.columns(2)
+            with col1:
+                unidParam = next(x[5] for x in dadosMotorista if str(x[0]) == str(idMot))
+                nomeUnid = next(x[0] for x in cidadesUnidades if x[1] == unidParam)
+                idxUnid = unidades.index(str(nomeUnid))
+                unidade = st.selectbox("Unidade", unidades, idxUnid, placeholder="")
+                if unidade:
+                    idUnid = list(set([x[1] for x in cidadesUnidades if x[0] == unidade]))[0]
+                else:
+                    idUnid = "NULL"
+            with col2:
+                cidade = st.selectbox("Cidade de Origem", cidades, None, placeholder="")
+                if cidade:
+                    idCid = list(set([x[3] for x in cidadesUnidades if x[2] == cidade]))[0]
+                else:
+                    idCid = "NULL"
 
-    colLiv, colBt = st.columns([5, 1])
-    with colBt:
-        st.write("")
-        salvar = st.form_submit_button("Salvar", use_container_width=True)
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                funcao = st.selectbox("Função", list(set([x[1] for x in funcaoMot if x[1]])), None, placeholder="")
+                if funcao:
+                    idFuncao = list(set([x[0] for x in funcaoMot if x[1] == funcao]))[0]
+                else:
+                    idFuncao = "NULL"
+            with col2:
+                dtAdmissao = st.date_input("Data de Admissão", format="DD/MM/YYYY")
+            with col3:
+                status = st.selectbox("Status", ["Ativo", "Inativo"])
+                status = 1 if status == "Ativo" else 0
 
-    if salvar:
-        dadosMot = {
-            "nome": nome.upper(),
-            "matricula": matricula,
-            "unidade": idUnid,
-            "cidade": idCid,
-            "funcao": idFuncao,
-            "admissao": dtAdmissao.strftime("%Y-%m-%d"),
-            "status": status
-        }
+            colLiv, colBt = st.columns([5, 1])
+            with colBt:
+                st.write("")
+                salvar = st.form_submit_button("Salvar", use_container_width=True)
+else:
+    tituloPage("Cadastrar Motorista")
 
-        sql = "INSERT INTO motoristas_lista VALUES('NULL', %(nome)s, %(funcao)s, %(admissao)s, %(status)s, %(unidade)s, %(cidade)s, %(matricula)s)"
-        mycursor.execute(sql, dadosMot)
-        conexao.commit()
+    with st.form("motorista", clear_on_submit=True, border=False):
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            nome = st.text_input("Nome")
+        with col2:
+            matricula = st.text_input("Matrícula")
 
-        mycursor.close()
-        conexao.close()
+        col1, col2 = st.columns(2)
+        with col1:
+            unidade = st.selectbox("Unidade", unidades, None, placeholder="")
+            if unidade:
+                idUnid = list(set([x[1] for x in cidadesUnidades if x[0] == unidade]))[0]
+            else:
+                idUnid = "NULL"
+        with col2:
+            cidade = st.selectbox("Cidade de Origem", cidades, None, placeholder="")
+            if cidade:
+                idCid = list(set([x[3] for x in cidadesUnidades if x[2] == cidade]))[0]
+            else:
+                idCid = "NULL"
 
-        st.toast("Motorista cadastrado com sucesso!", icon="✅")
-        sleep(1.5)
-        st.switch_page("pages/2 - Motoristas.py")
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            funcao = st.selectbox("Função", list(set([x[1] for x in funcaoMot if x[1]])), None, placeholder="")
+            if funcao:
+                idFuncao = list(set([x[0] for x in funcaoMot if x[1] == funcao]))[0]
+            else:
+                idFuncao = "NULL"
+        with col2:
+            dtAdmissao = st.date_input("Data de Admissão", format="DD/MM/YYYY")
+        with col3:
+            status = st.selectbox("Status", ["Ativo", "Inativo"])
+            status = 1 if status == "Ativo" else 0
+
+        colLiv, colBt = st.columns([5, 1])
+        with colBt:
+            st.write("")
+            salvar = st.form_submit_button("Salvar", use_container_width=True)
+
+        if salvar:
+            dadosMot = {
+                "nome": nome.upper(),
+                "matricula": matricula,
+                "unidade": idUnid,
+                "cidade": idCid,
+                "funcao": idFuncao,
+                "admissao": dtAdmissao.strftime("%Y-%m-%d"),
+                "status": status
+            }
+
+            sql = "INSERT INTO motoristas_lista VALUES('NULL', %(nome)s, %(funcao)s, %(admissao)s, %(status)s, %(unidade)s, %(cidade)s, %(matricula)s)"
+            mycursor.execute(sql, dadosMot)
+            conexao.commit()
+
+            mycursor.close()
+            conexao.close()
+
+            st.toast("Motorista cadastrado com sucesso!", icon="✅")
+            sleep(1)
+            st.switch_page("pages/2 - Motoristas.py")
 
 mycursor.close()
 conexao.close()
