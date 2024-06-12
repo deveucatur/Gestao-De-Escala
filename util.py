@@ -339,3 +339,146 @@ def tituloPage(titulo):
     
     st.write(f"<div>{html}</div>", unsafe_allow_html=True)
     st.write(f"<style>{css}</style>", unsafe_allow_html=True)
+
+def tabelas(page, dados):
+    if page == "Motorista":
+        html = """<div class="tabela">
+                <table>
+                    <tr>
+                        <th>Matrícula</th>
+                        <th>Nome</th>
+                        <th>Unidade</th>
+                        <th>Cidade de Origem</th>
+                        <th>Função</th>
+                        <th>Situação</th>
+                        <th>Ações</th>
+                    </tr>"""
+        
+        for ddMotorista in dados:
+            if ddMotorista[11]:
+                situacao = "Escalado"
+            elif ddMotorista[12]:
+                situacao = ""
+                for sit in ddMotorista[12].split("~/>"):
+                    situacao += f"{sit}; "
+            else:
+                situacao = " "
+
+            html += f"""<tr>
+                    <td>{ddMotorista[7]}</td>
+                    <td>{ddMotorista[1]}</td>
+                    <td>{ddMotorista[8]}</td>
+                    <td>{ddMotorista[9]}</td>
+                    <td>{ddMotorista[10]}</td>
+                    <td>{situacao}</td>
+                    <td class="acao">
+                        <a href="http://localhost:8501/novoMotorista/?funcao=editar&id={ddMotorista[0]}" target="_self">
+                            <img src="https://cdn-icons-png.flaticon.com/128/1159/1159633.png" alt="Ícone de editar dado" title="Editar Motorista">
+                        </a>
+                        <img src="https://cdn-icons-png.flaticon.com/128/4753/4753030.png" alt="Ícone de registrar ausência" title="Registrar Ausência">
+                        <img src="https://cdn-icons-png.flaticon.com/128/4347/4347443.png" alt="Ícone de excluir dado" title="Excluir Motorista">
+                    </td>
+                </tr>"""
+
+    css = """.tabela{
+            max-height: 500px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-radius: 16px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabela::-webkit-scrollbar{
+            width: 5px;
+        }
+
+        .tabela::-webkit-scrollbar-track{
+            background-color: #dfefff;
+            border-radius: 10px;
+        }
+
+        .tabela::-webkit-scrollbar-thumb{
+            background-color: #9dacbb;
+            border-radius: 10px;
+        }
+
+        .tabela::-webkit-scrollbar-thumb:hover{
+            background-color: #819fbd;
+        }
+
+        .tabela table{
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 0;
+            background-color: #bfd6ec;
+            border: 1px solid #788da1;
+            border-radius: 16px;
+            color: #000;
+        }
+
+        .tabela th{
+            background-color: #456c91;
+            color: #ebf6ff;
+            position: sticky;
+            top: 0;
+        }
+
+        .tabela tr th{
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .tabela tr:nth-child(even){
+            background-color: #a6c7e5;
+        }
+
+        .tabela tr:hover{
+            background-color: #91a9c0;
+        }
+
+        .tabela tr td{
+            padding: 10px;
+            border: None;
+            text-align: center;
+        }
+
+        .tabela tr td img{
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            text-align: center;
+            margin: 0 3px;
+        }
+
+        .tabela .acao{
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .tabela tr td img:hover{
+            transform: scale(1.2);
+        }
+
+        .tabela tr:first-child th:first-child{
+            border-top-left-radius: 10px;
+        }
+
+        .tabela tr:first-child th:last-child{
+            border-top-right-radius: 10px;
+        }
+
+        .tabela tr:last-child td:first-child{
+            border-bottom-left-radius: 10px;
+        }
+
+        .tabela tr:last-child td:last-child{
+            border-bottom-right-radius: 10px;
+        }"""
+
+    st.write(f"<div>{html}</div>", unsafe_allow_html=True)
+    st.write(f"<style>{css}</style>", unsafe_allow_html=True)
