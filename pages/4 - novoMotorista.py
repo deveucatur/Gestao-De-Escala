@@ -3,6 +3,7 @@ from util import cabEscala, tituloPage
 import mysql.connector
 from time import sleep
 import datetime
+from conexao import conexaoBD
 
 st.set_page_config(
     "Motorista",
@@ -10,13 +11,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-conexao = mysql.connector.connect(
-    passwd='',
-    port=3306,
-    user='root',
-    host='localhost',
-    database='gestao_escala'
-)
+conexao = conexaoBD()
 mycursor = conexao.cursor()
 
 sql = "SELECT * FROM motoristas_lista;"
