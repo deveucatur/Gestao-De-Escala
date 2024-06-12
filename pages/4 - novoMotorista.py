@@ -1,5 +1,5 @@
 import streamlit as st
-from util import cabEscala
+from util import cabEscala, tituloPage
 import mysql.connector
 from time import sleep
 import datetime
@@ -46,14 +46,7 @@ cabEscala()
 if st.button("Voltar"):
     st.switch_page("pages/2 - Motoristas.py")
 
-tit1, tit2, tit3 = st.columns(3)
-
-with tit1:
-    st.write("---")
-with tit2:
-    st.title("Novo Motorista")
-with tit3:
-    st.write("---")
+tituloPage("Cadastrar Motorista")
 
 with st.form("motorista", clear_on_submit=True, border=False):
     col1, col2 = st.columns([3, 1])
