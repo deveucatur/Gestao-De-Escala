@@ -74,7 +74,7 @@ def cabecalho(nome):
         }}
 
         .icone button{{
-            background-color: #e6dde6;
+            background-color: #9dacbb;
             border-radius: 50%;
             cursor: pointer;
             border: none;
@@ -202,10 +202,10 @@ def cabEscala():
         .cabecalho .titulo {
             position: relative;
             z-index: 2;
-            color: #240002;
+            color: #000;
             text-align: center;
-            background-color: #adb9a9;
-            padding: 2px;
+            background-color: #9dacbb;
+            padding: 2px 5px;
             border-radius: 16px;
         }
 
@@ -217,7 +217,7 @@ def cabEscala():
 
         [data-testid="collapsedControl"]{
            z-index: 999991;
-           background-color: #adb9a9;
+           background-color: #9dacbb;
            height: 70px;
            width: 100px;
            left: 0;
@@ -258,7 +258,7 @@ def botaoHome(nome, img, link):
     css = """.botaoHome {
             margin: 10px;
             text-align: center;
-            background-color: #c7d6c2;
+            background-color: #9dacbb;
             padding: 8px;
             width: 100%;
             border-radius: 24px;
@@ -294,10 +294,47 @@ def botaoHome(nome, img, link):
         }
 
         .botaoHome:hover{
-            background-color: #adb9a9;
+            background-color: #819fbd;
             transform: scale(1.05);
             box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
             cursor: pointer;
+        }"""
+    
+    st.write(f"<div>{html}</div>", unsafe_allow_html=True)
+    st.write(f"<style>{css}</style>", unsafe_allow_html=True)
+
+def tituloPage(titulo):
+    html = f"""<div class="header">
+            <hr>
+            <p>{titulo.upper()}</p>
+            <hr>
+        </div>"""
+
+    css = """.header{
+            width: 99%;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+        }
+
+        .header hr{
+            flex: 1;
+            border: none;
+            border-top: 3px solid #333;
+            border-radius: 8px;
+            margin: 0;
+        }
+
+        .header p{
+            font-size: 2em;
+            font-weight: bold;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            width: max-content;
+            margin: 0 auto;
+            text-align: center;
+            white-space: nowrap;
+            color: #000;
+            padding: 0 5px;
         }"""
     
     st.write(f"<div>{html}</div>", unsafe_allow_html=True)
