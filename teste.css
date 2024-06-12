@@ -168,7 +168,7 @@ body:has(.cabecalho:sticky + .container) .cabecalho {
 
 .tabela th{
     background-color: #456c91;
-    color: #fffccc;
+    color: #ebf6ff;
     position: sticky;
     top: 0;
 }
