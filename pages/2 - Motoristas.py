@@ -83,6 +83,46 @@ if novoMot:
 
 tituloPage("Dados dos Motoristas")
 
+with st.expander("Filtrar"):
+    filNome = st.text_input("Nome", placeholder="Filtrar por nome")
+    if filNome:
+        dadosMotorista = [x for x in dadosMotorista if filNome.upper() in x[1]]
+    st.divider()
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # unidades = ["TODAS"]
+        unidades = list(set(x[8] for x in dadosMotorista if x[8]))
+        filUnidade = st.multiselect("Unidades", unidades, placeholder="Selecionar unidades")
+        # if "TODAS" not in filUnidade:
+        if filUnidade:
+            dadosMotorista = [x for x in dadosMotorista if x[8] in filUnidade]
+
+        # funcoes = ["TODAS"]
+        funcoes = list(set(x[10] for x in dadosMotorista if x[10]))
+        filFuncao = st.multiselect("Funções", funcoes, placeholder="Selecionar funções")
+        # if "TODAS" not in filFuncao:
+        if filFuncao:
+            dadosMotorista = [x for x in dadosMotorista if x[10] in filFuncao]
+
+    with col2:
+        # cidades = ["TODAS"]
+        cidades = list(set(x[9] for x in dadosMotorista if x[9]))
+        filCidade = st.multiselect("Cidades de Origem", cidades, placeholder="Selecionar cidades")
+        # if "TODAS" not in filCidade:
+        if filCidade:
+            dadosMotorista = [x for x in dadosMotorista if x[9] in filCidade]
+
+        situacoes = list({"Escalado" for x in dadosMotorista if x[11]})
+        setSituacoes = set()
+        for subLista in (x[12].split("~/>") for x in dadosMotorista if x[12]):
+            setSituacoes.update(subLista)
+        situacoes += list(setSituacoes)
+        filSituacao = st.multiselect("Situações", situacoes, placeholder="Selecionar situações") 
+        if filSituacao:
+            dadosMotorista = [x for x in dadosMotorista if (("Escalado" in filSituacao and x[11]) or any(y in x[12].split("~/>") for y in filSituacao if x[12]))]
+
 tabelas("Motorista", dadosMotorista)
 
 if len(st.query_params.to_dict()) != 0:
