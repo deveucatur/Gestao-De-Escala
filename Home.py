@@ -1,6 +1,5 @@
 import streamlit as st
 from util import cabecalho, cabEscala, botaoHome
-import streamlit.components.v1 as components
 
 st.set_page_config(
     "EscalaMax",
@@ -9,13 +8,7 @@ st.set_page_config(
     page_icon="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png"
 )
 
-# cabecalho("Rahyan")
 cabEscala()
-
-# cab = cabEscala()
-# components.html(cabEscala())
-
-# st.title("Gestão de Escalas")
 
 col1, col2, col3, col4 = st.columns(4)
 

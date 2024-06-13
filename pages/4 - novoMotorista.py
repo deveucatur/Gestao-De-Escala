@@ -1,8 +1,6 @@
 import streamlit as st
 from util import cabEscala, tituloPage
-import mysql.connector
 from time import sleep
-import datetime
 from conexao import conexaoBD
 
 st.set_page_config(

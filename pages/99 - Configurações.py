@@ -8,7 +8,6 @@ st.set_page_config(
     page_icon="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png"
 )
 
-# cabecalho("Rahyan")
 cabEscala()
 
 st.title("Configurações")

@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 from util import cabEscala, tabelas, tituloPage, excluirMotorista
 from conexao import conexaoBD
 from datetime import datetime
@@ -14,7 +13,6 @@ st.set_page_config(
 conexao = conexaoBD()
 mycursor = conexao.cursor()
 
-# cabecalho("Rahyan")
 cabEscala()
 
 hoje = datetime.today().date().strftime("%Y-%m-%d")
@@ -94,22 +92,3 @@ if len(st.query_params.to_dict()) != 0:
 
     if pageFuncao == "excluir":
         excluirMotorista(idMot, nomeMot, matricMot)
-
-# planil = pd.read_excel('documentos/ProjetoMotoristas.xlsx', sheet_name='listaMotoristas')
-
-# columns_plan = [column for column in planil]
-
-# listMotoristas = []
-
-# for idx_mot in range(len(planil['ANO'])):
-#     aux_list = [planil[colm][idx_mot] for colm in columns_plan]
-    
-#     listMotoristas.append(aux_list)
-
-# rotulos = ["ANO", "EMPRESA", "CHAPA", "NOME", "FUNÇÃO", "GRUPO", "CEEMs", "CIDADE", "ÁREA", "DATA ADMISSÃO", "ATIVO"]
-
-# # st.write(listMotoristas)
-
-# df = pd.DataFrame(listMotoristas, columns=rotulos)
-
-# st.table(df)

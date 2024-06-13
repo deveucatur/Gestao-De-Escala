@@ -13,7 +13,6 @@ st.set_page_config(
     page_icon="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png"
 )
 
-# cabecalho("Rodrigo")
 cabEscala()
 
 with open("documentos/projeto_linhas_horarios.json", "r", encoding="utf-8") as file:
