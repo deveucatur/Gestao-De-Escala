@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from util import cabEscala, tabelas, tituloPage
+from util import cabEscala, tabelas, tituloPage, excluirMotorista
 from conexao import conexaoBD
 from datetime import datetime
 
@@ -84,6 +84,15 @@ if novoMot:
 tituloPage("Dados dos Motoristas")
 
 tabelas("Motorista", dadosMotorista)
+
+if len(st.query_params.to_dict()) != 0:
+    pageFuncao = st.query_params["funcao"]
+    idMot = st.query_params["id"]
+    nomeMot = next(x[1] for x in dadosMotorista if str(x[0]) == str(idMot))
+    matricMot = next(x[7] for x in dadosMotorista if str(x[0]) == str(idMot))
+
+    if pageFuncao == "excluir":
+        excluirMotorista(idMot, nomeMot, matricMot)
 
 # planil = pd.read_excel('documentos/ProjetoMotoristas.xlsx', sheet_name='listaMotoristas')
 
