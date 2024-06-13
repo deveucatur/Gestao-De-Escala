@@ -119,7 +119,7 @@ with st.expander("Filtrar"):
         for subLista in (x[12].split("~/>") for x in dadosMotorista if x[12]):
             setSituacoes.update(subLista)
         situacoes += list(setSituacoes)
-        filSituacao = st.multiselect("Situações", situacoes, placeholder="Selecionar situações") 
+        filSituacao = st.multiselect("Situações", situacoes, placeholder="Selecionar situações")
         if filSituacao:
             dadosMotorista = [x for x in dadosMotorista if (("Escalado" in filSituacao and x[11]) or any(y in x[12].split("~/>") for y in filSituacao if x[12]))]
 
