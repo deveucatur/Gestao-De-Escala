@@ -377,7 +377,9 @@ def tabelas(page, dados):
                         <a href="http://localhost:8501/novoMotorista/?funcao=editar&id={ddMotorista[0]}" target="_self">
                             <img src="https://cdn-icons-png.flaticon.com/128/1159/1159633.png" alt="Ícone de editar dado" title="Editar Motorista">
                         </a>
-                        <img src="https://cdn-icons-png.flaticon.com/128/4753/4753030.png" alt="Ícone de registrar ausência" title="Registrar Ausência">
+                        <a href="http://localhost:8501/novoMotorista/?funcao=aunsencia&id={ddMotorista[0]}" target="_self">
+                            <img src="https://cdn-icons-png.flaticon.com/128/4753/4753030.png" alt="Ícone de registrar ausência" title="Registrar Ausência">
+                        </a>
                         <img src="https://cdn-icons-png.flaticon.com/128/4347/4347443.png" alt="Ícone de excluir dado" title="Excluir Motorista">
                     </td>
                 </tr>"""
