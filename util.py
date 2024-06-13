@@ -185,13 +185,15 @@ def cabEscala():
             </div>
         </div>"""
     
-    css = """.cabecalho {
+    css = """@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+    
+        .cabecalho {
             margin: 0;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70px;
+            height: 59px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -207,12 +209,13 @@ def cabEscala():
             color: #000;
             text-align: center;
             background-color: #9dacbb;
-            padding: 2px 5px;
+            padding: 0 5px;
             border-radius: 16px;
         }
 
         .cabecalho .titulo p{
             margin: 3px;
+            font-family: "Open Sans", sans-serif;
             font-size: 24px;
             font-weight: bold;
         }
@@ -220,11 +223,11 @@ def cabEscala():
         [data-testid="collapsedControl"]{
            z-index: 999991;
            background-color: #9dacbb;
-           height: 70px;
+           height: 59px;
            width: 100px;
            left: 0;
            top: 0;
-           padding: 15px;
+           padding: 10px;
         }
         
         [data-testid="collapsedControl"] img,
