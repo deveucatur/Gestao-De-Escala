@@ -36,18 +36,19 @@ sql = "SELECT * FROM funcao_motorista"
 mycursor.execute(sql)
 funcaoMot = mycursor.fetchall()
 
+sql = "SELECT * FROM motivo_ausencia"
+mycursor.execute(sql)
+motivoAusencia = mycursor.fetchall()
+
 cabEscala()
 
 if st.button("Voltar"):
     st.switch_page("pages/2 - Motoristas.py")
 
 if len(st.query_params.to_dict()) != 0:
-    st.write("acesso com parametro")
     pageFuncao = st.query_params["funcao"]
     idMot = st.query_params["id"]
 
-    st.write(idMot)
-    st.write(pageFuncao)
     if pageFuncao == "editar":
         tituloPage("Editar Motorista")
 
@@ -121,6 +122,54 @@ if len(st.query_params.to_dict()) != 0:
                 st.toast("Motorista atualizado com sucesso!", icon="✅")
                 sleep(1)
                 st.switch_page("pages/2 - Motoristas.py")
+    elif pageFuncao == "ausencia":
+        tituloPage("Registrar Ausência")
+
+        with st.form("motorista", clear_on_submit=True, border=False):
+            col1, col2 = st.columns([3, 1])
+            with col1:
+                nome = st.text_input("Nome", [x[1] for x in dadosMotorista if str(x[0]) == str(idMot)][0], disabled=True)
+            with col2:
+                matricula = st.text_input("Matrícula", [x[7] for x in dadosMotorista if str(x[0]) == str(idMot)][0], disabled=True)
+
+            colMot, colIni, colFim = st.columns([2, 1, 1])
+            with colMot:
+                ausencia = st.selectbox("Motivo da Ausência", [x[1] for x in motivoAusencia], None, placeholder="")
+                if ausencia:
+                    idAusencia = list(set([x[0] for x in motivoAusencia if x[1] == ausencia]))[0]
+                else:
+                    idAusencia = "NULL"
+            with colIni:
+                dtInicio = st.date_input("Data de Início", format="DD/MM/YYYY")
+            with colFim:
+                dtFim = st.date_input("Data de Fim", format="DD/MM/YYYY")
+
+            colLiv, colBt = st.columns([5, 1])
+            with colBt:
+                st.write("")
+                salvar = st.form_submit_button("Salvar", use_container_width=True)
+
+            if salvar:
+                if dtFim < dtInicio:
+                    st.toast("A data de início não pode ser maior que a data de fim", icon="❌")
+                else:
+                    dadosAusencia = {
+                        "motorista": int(idMot),
+                        "motivo": idAusencia,
+                        "inicio": dtInicio,
+                        "fim": dtFim
+                    }
+
+                    sql = "INSERT INTO motoristas_ausencia VALUES('NULL', %(motorista)s, %(motivo)s, %(inicio)s, %(fim)s);"
+                    mycursor.execute(sql, dadosAusencia)
+                    conexao.commit()
+
+                    mycursor.close()
+                    conexao.close()
+
+                    st.toast("Ausência do motorista cadastrada com sucesso!", icon="✅")
+                    sleep(1)
+                    st.switch_page("pages/2 - Motoristas.py")
 else:
     tituloPage("Cadastrar Motorista")
 
