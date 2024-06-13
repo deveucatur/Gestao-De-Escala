@@ -197,13 +197,13 @@ def cabEscala():
             top: 0;
             left: 0;
             width: 100%;
-            height: 59px;
+            height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
             background-position: center;
             z-index: 999990;
-            background-color: #f0f0f0;
+            background-color: #34495e;
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
         }
 
@@ -214,21 +214,21 @@ def cabEscala():
             text-align: center;
             background-color: #9dacbb;
             padding: 0 5px;
-            border-radius: 16px;
+            border-radius: 8px;
         }
 
         .cabecalho .titulo p{
             margin: 3px;
             font-family: "Open Sans", sans-serif;
-            font-size: 24px;
+            font-size: 14px;
             font-weight: bold;
         }
 
         [data-testid="collapsedControl"]{
            z-index: 999991;
            background-color: #9dacbb;
-           height: 59px;
-           width: 100px;
+           height: 60px;
+           width: 90px;
            left: 0;
            top: 0;
            padding: 5px;
