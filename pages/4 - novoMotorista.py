@@ -18,8 +18,6 @@ sql = "SELECT * FROM motoristas_lista;"
 mycursor.execute(sql)
 dadosMotorista = mycursor.fetchall()
 
-st.write(dadosMotorista)
-
 sql = """SELECT u.unidade, u.id_unidade, c.nome_cidade, c.id_cidades
     FROM unidades u
     LEFT JOIN motoristas_lista ml1 ON u.id_unidade = ml1.fgkey_unidade
@@ -33,7 +31,6 @@ mycursor.execute(sql)
 cidadesUnidades = mycursor.fetchall()
 unidades = list(set([x[0] for x in cidadesUnidades if x[0]]))
 cidades = list(set([x[2] for x in cidadesUnidades if x[2]]))
-st.write(cidadesUnidades)
 
 sql = "SELECT * FROM funcao_motorista"
 mycursor.execute(sql)
@@ -72,7 +69,10 @@ if len(st.query_params.to_dict()) != 0:
                 else:
                     idUnid = "NULL"
             with col2:
-                cidade = st.selectbox("Cidade de Origem", cidades, None, placeholder="")
+                cidParam = next(x[6] for x in dadosMotorista if str(x[0]) == str(idMot))
+                nomeCid = next(x[2] for x in cidadesUnidades if x[3] == cidParam)
+                idxCid = cidades.index(str(nomeCid))
+                cidade = st.selectbox("Cidade de Origem", cidades, idxCid, placeholder="")
                 if cidade:
                     idCid = list(set([x[3] for x in cidadesUnidades if x[2] == cidade]))[0]
                 else:
@@ -80,21 +80,47 @@ if len(st.query_params.to_dict()) != 0:
 
             col1, col2, col3 = st.columns(3)
             with col1:
-                funcao = st.selectbox("Função", list(set([x[1] for x in funcaoMot if x[1]])), None, placeholder="")
+                funcParam = next(x[2] for x in dadosMotorista if str(x[0]) == str(idMot))
+                nomeFunc = next(x[1] for x in funcaoMot if x[0] == funcParam)
+                idxFunc = list(set([x[1] for x in funcaoMot if x[1]])).index(str(nomeFunc))
+                funcao = st.selectbox("Função", list(set([x[1] for x in funcaoMot if x[1]])), idxFunc, placeholder="")
                 if funcao:
                     idFuncao = list(set([x[0] for x in funcaoMot if x[1] == funcao]))[0]
                 else:
                     idFuncao = "NULL"
             with col2:
-                dtAdmissao = st.date_input("Data de Admissão", format="DD/MM/YYYY")
+                dtAdmissao = st.date_input("Data de Admissão", next(x[3] for x in dadosMotorista if str(x[0]) == str(idMot)), format="DD/MM/YYYY")
             with col3:
-                status = st.selectbox("Status", ["Ativo", "Inativo"])
+                status = st.selectbox("Status", ["Inativo", "Ativo"], next(x[4] for x in dadosMotorista if str(x[0]) == str(idMot)))
                 status = 1 if status == "Ativo" else 0
 
             colLiv, colBt = st.columns([5, 1])
             with colBt:
                 st.write("")
                 salvar = st.form_submit_button("Salvar", use_container_width=True)
+
+            if salvar:
+                dadosMot = {
+                    "id": int(idMot),
+                    "nome": nome.upper(),
+                    "matricula": matricula,
+                    "unidade": idUnid,
+                    "cidade": idCid,
+                    "funcao": idFuncao,
+                    "admissao": dtAdmissao.strftime("%Y-%m-%d"),
+                    "status": status
+                }
+
+                sql = "UPDATE motoristas_lista SET nome_motorista = %(nome)s, fgkey_funcao = %(funcao)s, data_admissao = %(admissao)s, status_motorista = %(status)s, fgkey_unidade = %(unidade)s, fgkey_cidade = %(cidade)s, matricula_motorista = %(matricula)s WHERE id_mot = %(id)s;"
+                mycursor.execute(sql, dadosMot)
+                conexao.commit()
+
+                mycursor.close()
+                conexao.close()
+
+                st.toast("Motorista atualizado com sucesso!", icon="✅")
+                sleep(1)
+                st.switch_page("pages/2 - Motoristas.py")
 else:
     tituloPage("Cadastrar Motorista")
 
@@ -148,7 +174,7 @@ else:
                 "status": status
             }
 
-            sql = "INSERT INTO motoristas_lista VALUES('NULL', %(nome)s, %(funcao)s, %(admissao)s, %(status)s, %(unidade)s, %(cidade)s, %(matricula)s)"
+            sql = "INSERT INTO motoristas_lista VALUES('NULL', %(nome)s, %(funcao)s, %(admissao)s, %(status)s, %(unidade)s, %(cidade)s, %(matricula)s);"
             mycursor.execute(sql, dadosMot)
             conexao.commit()
 
