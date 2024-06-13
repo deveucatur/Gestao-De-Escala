@@ -1,4 +1,6 @@
 import streamlit as st
+from conexao import conexaoBD
+from time import sleep
 
 def cabecalho(nome):
     html = f"""<head>
@@ -377,10 +379,12 @@ def tabelas(page, dados):
                         <a href="http://localhost:8501/novoMotorista/?funcao=editar&id={ddMotorista[0]}" target="_self">
                             <img src="https://cdn-icons-png.flaticon.com/128/1159/1159633.png" alt="Ícone de editar dado" title="Editar Motorista">
                         </a>
-                        <a href="http://localhost:8501/novoMotorista/?funcao=aunsencia&id={ddMotorista[0]}" target="_self">
+                        <a href="http://localhost:8501/novoMotorista/?funcao=ausencia&id={ddMotorista[0]}" target="_self">
                             <img src="https://cdn-icons-png.flaticon.com/128/4753/4753030.png" alt="Ícone de registrar ausência" title="Registrar Ausência">
                         </a>
-                        <img src="https://cdn-icons-png.flaticon.com/128/4347/4347443.png" alt="Ícone de excluir dado" title="Excluir Motorista">
+                        <a href="http://localhost:8501/Motoristas/?funcao=excluir&id={ddMotorista[0]}" target="_self">
+                            <img src="https://cdn-icons-png.flaticon.com/128/4347/4347443.png" alt="Ícone de excluir dado" title="Excluir Motorista">
+                        </a>
                     </td>
                 </tr>"""
 
@@ -486,3 +490,35 @@ def tabelas(page, dados):
 
     st.write(f"<div>{html}</div>", unsafe_allow_html=True)
     st.write(f"<style>{css}</style>", unsafe_allow_html=True)
+
+@st.experimental_dialog("EXCLUIR MOTORISTA")
+def excluirMotorista(id, nome, matricula):
+    st.text(f"Matrícula: {matricula}")
+    st.text(f"Nome: {nome}")
+    st.write("O motorista ficará inativo no sistema")
+
+    colAux, colNao, colSim = st.columns([2, 1, 1])
+
+    with colNao:
+        cancelar = st.button("Cancelar", use_container_width=True)
+    with colSim:
+        aceitar = st.button("Aceitar", use_container_width=True)
+
+    if aceitar:
+        conexao = conexaoBD()
+        mycursor = conexao.cursor()
+
+        sql = f"UPDATE motoristas_lista SET status_motorista = 0 WHERE id_mot = {id}"
+        mycursor.execute(sql)
+        conexao.commit()
+
+        mycursor.close()
+        conexao.close()
+
+        st.query_params.clear()
+        st.toast(f"Motorista {nome} inativado com sucesso!", icon="✅")
+        sleep(1)
+        st.rerun()
+    elif cancelar:
+        st.query_params.clear()
+        st.rerun()
