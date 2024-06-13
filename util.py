@@ -231,23 +231,28 @@ def cabEscala():
            width: 100px;
            left: 0;
            top: 0;
-           padding: 10px;
+           padding: 5px;
         }
         
-        [data-testid="collapsedControl"] img,
+        [data-testid="collapsedControl"] img{
+            width: 35px;
+            height: 35px;
+        }
+
         [data-testid="stSidebar"][aria-expanded="true"] img{
-            width: 30px;
-            height: 30px;
+            width: 120px;
+            height: 35px;
         }
         
         [data-testid="collapsedControl"] svg,
         [data-testid="stSidebar"][aria-expanded="true"] svg{
-            height: 26px;
-            width: 26px;
+            height: 30px;
+            width: 30px;
+            margin: 5px 0;
         }"""
     st.write(f"<div>{html}</div>", unsafe_allow_html=True)
     st.write(f"<style>{css}</style>", unsafe_allow_html=True)
-    st.logo("https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoEscaleu.png", link="http://localhost:8501/")
+    st.logo("https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logo-EscalaMax.png", link="http://localhost:8501/", icon_image="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png")
 
 
 # .st-ae{
