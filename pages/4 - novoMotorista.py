@@ -1,5 +1,5 @@
 import streamlit as st
-from util import cabEscala, tituloPage
+from util import cabEscala, tituloPage, sideBar
 from time import sleep
 from conexao import conexaoBD
 
@@ -40,6 +40,7 @@ mycursor.execute(sql)
 motivoAusencia = mycursor.fetchall()
 
 cabEscala()
+sideBar()
 
 if st.button("Voltar"):
     st.switch_page("pages/2 - Motoristas.py")

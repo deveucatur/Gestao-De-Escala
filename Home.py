@@ -1,5 +1,5 @@
 import streamlit as st
-from util import cabecalho, cabEscala, botaoHome
+from util import cabEscala, botaoHome, sideBar
 
 st.set_page_config(
     "EscalaMax",
@@ -9,6 +9,7 @@ st.set_page_config(
 )
 
 cabEscala()
+sideBar()
 
 col1, col2, col3, col4 = st.columns(4)
 

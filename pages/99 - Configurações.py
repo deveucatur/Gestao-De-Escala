@@ -1,5 +1,5 @@
 import streamlit as st
-from util import cabEscala
+from util import cabEscala, sideBar
 
 st.set_page_config(
     "Configurações - EscalaMax",
@@ -9,5 +9,6 @@ st.set_page_config(
 )
 
 cabEscala()
+sideBar()
 
 st.title("Configurações")

@@ -1,5 +1,5 @@
 import streamlit as st
-from util import cabEscala, tabelas, tituloPage, excluirMotorista
+from util import cabEscala, tabelas, tituloPage, excluirMotorista, sideBar
 from conexao import conexaoBD
 from datetime import datetime
 
@@ -14,6 +14,7 @@ conexao = conexaoBD()
 mycursor = conexao.cursor()
 
 cabEscala()
+sideBar()
 
 hoje = datetime.today().date().strftime("%Y-%m-%d")
 sql = f"""SELECT 

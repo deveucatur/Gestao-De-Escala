@@ -537,3 +537,10 @@ def excluirMotorista(id, nome, matricula):
     elif cancelar:
         st.query_params.clear()
         st.rerun()
+
+def sideBar():
+    st.sidebar.page_link("Home.py")
+    st.sidebar.page_link("pages/1 - Linhas.py")
+    st.sidebar.page_link("pages/2 - Motoristas.py")
+    st.sidebar.page_link("pages/3 - Escalas.py")
+    st.sidebar.page_link("pages/99 - Configurações.py")

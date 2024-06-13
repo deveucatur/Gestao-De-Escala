@@ -1,6 +1,6 @@
 import streamlit as st
 import json
-from util import cabEscala
+from util import cabEscala, sideBar
 from datetime import timedelta, datetime
 import pandas as pd
 import copy
@@ -14,6 +14,7 @@ st.set_page_config(
 )
 
 cabEscala()
+sideBar()
 
 with open("documentos/projeto_linhas_horarios.json", "r", encoding="utf-8") as file:
     linhas_dados = json.load(file)
