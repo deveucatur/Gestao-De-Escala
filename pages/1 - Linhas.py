@@ -9,7 +9,8 @@ import plotly.figure_factory as ff
 st.set_page_config(
     "Linhas",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    page_icon="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png"
 )
 
 # cabecalho("Rodrigo")
