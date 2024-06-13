@@ -3,7 +3,7 @@ from util import cabecalho, cabEscala, botaoHome
 import streamlit.components.v1 as components
 
 st.set_page_config(
-    "Escalas",
+    "EscalaMax",
     layout="wide",
     initial_sidebar_state="collapsed",
     page_icon="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png"

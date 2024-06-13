@@ -6,7 +6,7 @@ import datetime
 from conexao import conexaoBD
 
 st.set_page_config(
-    "Motorista",
+    "Motorista - EscalaMax",
     layout="wide",
     initial_sidebar_state="collapsed",
     page_icon="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png"
