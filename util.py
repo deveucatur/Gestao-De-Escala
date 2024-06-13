@@ -186,6 +186,10 @@ def cabEscala():
         </div>"""
     
     css = """@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+        p{
+            font-family: "Open Sans", sans-serif;
+        }
     
         .cabecalho {
             margin: 0;
@@ -296,6 +300,7 @@ def botaoHome(nome, img, link):
             margin: 4px 2px;
             cursor: pointer;
             font-weight: bold;
+            font-family: "Open Sans", sans-serif;
         }
 
         .botaoHome:hover{
@@ -333,7 +338,7 @@ def tituloPage(titulo):
         }
 
         .header p{
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: bold;
             font-family: font-family: "Open Sans", sans-serif;
             width: max-content;
@@ -397,6 +402,8 @@ def tabelas(page, dados):
             overflow-x: hidden;
             border-radius: 16px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-family: "Open Sans", sans-serif;
+            font-size: 14px;
         }
 
         .tabela::-webkit-scrollbar{
@@ -436,7 +443,7 @@ def tabelas(page, dados):
         }
 
         .tabela tr th{
-            padding: 10px;
+            padding: 5px;
             text-align: center;
             font-weight: bold;
         }
@@ -450,7 +457,7 @@ def tabelas(page, dados):
         }
 
         .tabela tr td{
-            padding: 10px;
+            padding: 5px;
             border: None;
             text-align: center;
         }
