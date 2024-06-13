@@ -310,7 +310,9 @@ def tituloPage(titulo):
             <hr>
         </div>"""
 
-    css = """.header{
+    css = """@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+    
+        .header{
             width: 99%;
             margin: 0 auto;
             display: flex;
@@ -326,9 +328,9 @@ def tituloPage(titulo):
         }
 
         .header p{
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: bold;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-family: font-family: "Open Sans", sans-serif;
             width: max-content;
             margin: 0 auto;
             text-align: center;
