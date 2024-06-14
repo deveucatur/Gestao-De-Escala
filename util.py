@@ -379,7 +379,7 @@ def tabelas(page, dados):
                 for sit in ddMotorista[12].split("~/>"):
                     situacao += f"{sit}; "
             else:
-                situacao = " "
+                situacao = "Livre"
 
             html += f"""<tr>
                     <td>{ddMotorista[7]}</td>
