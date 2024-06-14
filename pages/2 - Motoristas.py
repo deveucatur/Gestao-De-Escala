@@ -99,13 +99,6 @@ with st.expander("Filtrar"):
         if filUnidade:
             dadosMotorista = [x for x in dadosMotorista if x[8] in filUnidade]
 
-        # funcoes = ["TODAS"]
-        funcoes = list(set(x[10] for x in dadosMotorista if x[10]))
-        filFuncao = st.multiselect("Funções", funcoes, placeholder="Selecionar funções")
-        # if "TODAS" not in filFuncao:
-        if filFuncao:
-            dadosMotorista = [x for x in dadosMotorista if x[10] in filFuncao]
-
     with col2:
         # cidades = ["TODAS"]
         cidades = list(set(x[9] for x in dadosMotorista if x[9]))
@@ -114,16 +107,35 @@ with st.expander("Filtrar"):
         if filCidade:
             dadosMotorista = [x for x in dadosMotorista if x[9] in filCidade]
 
+    col1, col2, col3 = st.columns([2, 2, 1])
+    with col1:
+        # funcoes = ["TODAS"]
+        funcoes = list(set(x[10] for x in dadosMotorista if x[10]))
+        filFuncao = st.multiselect("Funções", funcoes, placeholder="Selecionar funções")
+        # if "TODAS" not in filFuncao:
+        if filFuncao:
+            dadosMotorista = [x for x in dadosMotorista if x[10] in filFuncao]
+    with col2:
         situacoes = list({"Escalado" for x in dadosMotorista if x[11]})
         setSituacoes = set()
         for subLista in (x[12].split("~/>") for x in dadosMotorista if x[12]):
             setSituacoes.update(subLista)
+        if any(not x[11] and not x[12] for x in dadosMotorista):
+            situacoes.append("Livre")
         situacoes += list(setSituacoes)
         filSituacao = st.multiselect("Situações", situacoes, placeholder="Selecionar situações")
         if filSituacao:
-            dadosMotorista = [x for x in dadosMotorista if (("Escalado" in filSituacao and x[11]) or any(y in x[12].split("~/>") for y in filSituacao if x[12]))]
-
-tabelas("Motorista", dadosMotorista)
+            dadosMotorista = [x for x in dadosMotorista if (("Escalado" in filSituacao and x[11]) or any(y in x[12].split("~/>") for y in filSituacao if x[12]) or ("Livre" in filSituacao and not x[11] and not x[12]))]
+    with col3:
+        status = st.radio("Status", ["Ativo", "Inativo"], horizontal=True)
+        if status == "Ativo":
+            dadosMotorista = [x for x in dadosMotorista if x[4] == 1]
+        else:
+            dadosMotorista = [x for x in dadosMotorista if x[4] == 0]
+if len(dadosMotorista) != 0:
+    tabelas("Motorista", dadosMotorista)
+else:
+    st.info("Nenhum motorista encontrado")
 
 if len(st.query_params.to_dict()) != 0:
     pageFuncao = st.query_params["funcao"]
