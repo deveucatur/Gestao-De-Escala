@@ -79,7 +79,7 @@ if len(st.query_params.to_dict()) != 0:
                 else:
                     idCid = "NULL"
 
-            col1, col2, col3 = st.columns(3)
+            col1, col2 = st.columns(2)
             with col1:
                 funcParam = next(x[2] for x in dadosMotorista if str(x[0]) == str(idMot))
                 nomeFunc = next(x[1] for x in funcaoMot if x[0] == funcParam)
@@ -91,9 +91,6 @@ if len(st.query_params.to_dict()) != 0:
                     idFuncao = "NULL"
             with col2:
                 dtAdmissao = st.date_input("Data de Admissão", next(x[3] for x in dadosMotorista if str(x[0]) == str(idMot)), format="DD/MM/YYYY")
-            with col3:
-                status = st.selectbox("Status", ["Inativo", "Ativo"], next(x[4] for x in dadosMotorista if str(x[0]) == str(idMot)))
-                status = 1 if status == "Ativo" else 0
 
             colLiv, colBt = st.columns([5, 1])
             with colBt:
@@ -108,11 +105,10 @@ if len(st.query_params.to_dict()) != 0:
                     "unidade": idUnid,
                     "cidade": idCid,
                     "funcao": idFuncao,
-                    "admissao": dtAdmissao.strftime("%Y-%m-%d"),
-                    "status": status
+                    "admissao": dtAdmissao.strftime("%Y-%m-%d")
                 }
 
-                sql = "UPDATE motoristas_lista SET nome_motorista = %(nome)s, fgkey_funcao = %(funcao)s, data_admissao = %(admissao)s, status_motorista = %(status)s, fgkey_unidade = %(unidade)s, fgkey_cidade = %(cidade)s, matricula_motorista = %(matricula)s WHERE id_mot = %(id)s;"
+                sql = "UPDATE motoristas_lista SET nome_motorista = %(nome)s, fgkey_funcao = %(funcao)s, data_admissao = %(admissao)s, fgkey_unidade = %(unidade)s, fgkey_cidade = %(cidade)s, matricula_motorista = %(matricula)s WHERE id_mot = %(id)s;"
                 mycursor.execute(sql, dadosMot)
                 conexao.commit()
 
@@ -160,7 +156,7 @@ if len(st.query_params.to_dict()) != 0:
                         "fim": dtFim
                     }
 
-                    sql = "INSERT INTO motoristas_ausencia VALUES('NULL', %(motorista)s, %(motivo)s, %(inicio)s, %(fim)s);"
+                    sql = "INSERT INTO motoristas_ausencia(motorista_fgkey, motivo_fgkey, data_ini, data_fim) VALUES(%(motorista)s, %(motivo)s, %(inicio)s, %(fim)s);"
                     mycursor.execute(sql, dadosAusencia)
                     conexao.commit()
 
@@ -194,7 +190,7 @@ else:
             else:
                 idCid = "NULL"
 
-        col1, col2, col3 = st.columns(3)
+        col1, col2 = st.columns(2)
         with col1:
             funcao = st.selectbox("Função", list(set([x[1] for x in funcaoMot if x[1]])), None, placeholder="")
             if funcao:
@@ -203,9 +199,7 @@ else:
                 idFuncao = "NULL"
         with col2:
             dtAdmissao = st.date_input("Data de Admissão", format="DD/MM/YYYY")
-        with col3:
-            status = st.selectbox("Status", ["Ativo", "Inativo"])
-            status = 1 if status == "Ativo" else 0
+        
 
         colLiv, colBt = st.columns([5, 1])
         with colBt:
@@ -220,7 +214,7 @@ else:
                 "cidade": idCid,
                 "funcao": idFuncao,
                 "admissao": dtAdmissao.strftime("%Y-%m-%d"),
-                "status": status
+                "status": 1
             }
 
             sql = "INSERT INTO motoristas_lista VALUES('NULL', %(nome)s, %(funcao)s, %(admissao)s, %(status)s, %(unidade)s, %(cidade)s, %(matricula)s);"
