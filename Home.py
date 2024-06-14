@@ -22,8 +22,8 @@ with col3:
 with col4:
     botaoHome("Configurações", "https://cdn-icons-png.flaticon.com/128/1658/1658993.png", "http://localhost:8501/Configura%C3%A7%C3%B5es")
 
-st.text_input("Texto teste", placeholder="Place Holder Teste")
-st.text_input("teste de css nativo")
-st.selectbox("select teste", ["teste1", "teste 2"])
-st.text_area("teste")
-st.checkbox("teste")
+# st.text_input("Texto teste", placeholder="Place Holder Teste")
+# st.text_input("teste de css nativo")
+# st.selectbox("select teste", ["teste1", "teste 2"])
+# st.text_area("teste")
+# st.checkbox("teste")
