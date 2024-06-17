@@ -358,7 +358,7 @@ def tituloPage(titulo):
     st.write(f"<style>{css}</style>", unsafe_allow_html=True)
 
 def tabelas(page, dados):
-    if page == "Motorista":
+    if page == "MotoristaAtivo":
         html = """<div class="tabela">
                 <table>
                     <tr>
@@ -397,6 +397,35 @@ def tabelas(page, dados):
                         </a>
                         <a href="http://localhost:8501/Motoristas/?funcao=excluir&id={ddMotorista[0]}" target="_self">
                             <img src="https://cdn-icons-png.flaticon.com/128/4347/4347443.png" alt="Ícone de excluir dado" title="Excluir Motorista">
+                        </a>
+                    </td>
+                </tr>"""
+    elif page == "MotoristaInativo":
+        html = f"""<div class="tabela">
+                <table>
+                    <tr>
+                        <th>Matrícula</th>
+                        <th>Nome</th>
+                        <th>Unidade</th>
+                        <th>Cidade de Origem</th>
+                        <th>Função</th>
+                        <th>Situação</th>
+                        <th>Ações</th>
+                    </tr>"""
+        
+        for ddMotorista in dados:
+            situacao = "Inativo"
+
+            html += f"""<tr>
+                    <td>{ddMotorista[7]}</td>
+                    <td>{ddMotorista[1]}</td>
+                    <td>{ddMotorista[8]}</td>
+                    <td>{ddMotorista[9]}</td>
+                    <td>{ddMotorista[10]}</td>
+                    <td>{situacao}</td>
+                    <td class="acao">
+                        <a href="http://localhost:8501/Motoristas/?funcao=ativar&id={ddMotorista[0]}" target="_self">
+                            <img src="https://cdn-icons-png.flaticon.com/128/1827/1827856.png" alt="Ícone de ativar motorista" title="Ativar Motorista">
                         </a>
                     </td>
                 </tr>"""
@@ -532,6 +561,38 @@ def excluirMotorista(id, nome, matricula):
 
         st.query_params.clear()
         st.toast(f"Motorista {nome} inativado com sucesso!", icon="✅")
+        sleep(1)
+        st.rerun()
+    elif cancelar:
+        st.query_params.clear()
+        st.rerun()
+
+@st.experimental_dialog("ATIVAR MOTORISTA")
+def ativarMotorista(id, nome, matricula):
+    st.text(f"Matrícula: {matricula}")
+    st.text(f"Nome: {nome}")
+    st.write("O motorista ficará ativo no sistema")
+
+    colAux, colNao, colSim = st.columns([2, 1, 1])
+
+    with colNao:
+        cancelar = st.button("Cancelar", use_container_width=True)
+    with colSim:
+        aceitar = st.button("Aceitar", use_container_width=True)
+
+    if aceitar:
+        conexao = conexaoBD()
+        mycursor = conexao.cursor()
+
+        sql = f"UPDATE motoristas_lista SET status_motorista = 1 WHERE id_mot = {id}"
+        mycursor.execute(sql)
+        conexao.commit()
+
+        mycursor.close()
+        conexao.close()
+
+        st.query_params.clear()
+        st.toast(f"Motorista {nome} ativado com sucesso!", icon="✅")
         sleep(1)
         st.rerun()
     elif cancelar:

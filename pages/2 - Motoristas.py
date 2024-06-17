@@ -1,5 +1,5 @@
 import streamlit as st
-from util import cabEscala, tabelas, tituloPage, excluirMotorista, sideBar
+from util import cabEscala, tabelas, tituloPage, excluirMotorista, sideBar, ativarMotorista
 from conexao import conexaoBD
 from datetime import datetime
 
@@ -133,7 +133,10 @@ def fragTabela(dadosMotorista):
             else:
                 dadosMotorista = [x for x in dadosMotorista if x[4] == 0]
     if len(dadosMotorista) != 0:
-        tabelas("Motorista", dadosMotorista)
+        if status == "Ativo":
+            tabelas("MotoristaAtivo", dadosMotorista)
+        elif status == "Inativo":
+            tabelas("MotoristaInativo", dadosMotorista)
     else:
         st.info("Nenhum motorista encontrado")
 
@@ -147,3 +150,5 @@ if len(st.query_params.to_dict()) != 0:
 
     if pageFuncao == "excluir":
         excluirMotorista(idMot, nomeMot, matricMot)
+    elif pageFuncao == "ativar":
+        ativarMotorista(idMot, nomeMot, matricMot)

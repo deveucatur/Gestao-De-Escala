@@ -217,7 +217,7 @@ else:
                 "status": 1
             }
 
-            sql = "INSERT INTO motoristas_lista VALUES('NULL', %(nome)s, %(funcao)s, %(admissao)s, %(status)s, %(unidade)s, %(cidade)s, %(matricula)s);"
+            sql = "INSERT INTO motoristas_lista(nome_motorista, fgkey_funcao, data_admissao, status_motorista, fgkey_unidade, fgkey_cidade, matricula_motorista) VALUES(%(nome)s, %(funcao)s, %(admissao)s, %(status)s, %(unidade)s, %(cidade)s, %(matricula)s);"
             mycursor.execute(sql, dadosMot)
             conexao.commit()
 
