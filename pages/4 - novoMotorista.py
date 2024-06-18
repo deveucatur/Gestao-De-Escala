@@ -118,6 +118,7 @@ if len(st.query_params.to_dict()) != 0:
                 st.toast("Motorista atualizado com sucesso!", icon="✅")
                 sleep(1)
                 st.switch_page("pages/2 - Motoristas.py")
+
     elif pageFuncao == "ausencia":
         tituloPage("Registrar Ausência")
 
@@ -166,6 +167,7 @@ if len(st.query_params.to_dict()) != 0:
                     st.toast("Ausência do motorista cadastrada com sucesso!", icon="✅")
                     sleep(1)
                     st.switch_page("pages/2 - Motoristas.py")
+                    
 else:
     tituloPage("Cadastrar Motorista")
 
