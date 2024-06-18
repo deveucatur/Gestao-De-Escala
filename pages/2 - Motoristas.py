@@ -92,27 +92,21 @@ def fragTabela(dadosMotorista):
         col1, col2 = st.columns(2)
 
         with col1:
-            # unidades = ["TODAS"]
             unidades = list(set(x[8] for x in dadosMotorista if x[8]))
             filUnidade = st.multiselect("Unidades", unidades, placeholder="Selecionar unidades")
-            # if "TODAS" not in filUnidade:
             if filUnidade:
                 dadosMotorista = [x for x in dadosMotorista if x[8] in filUnidade]
 
         with col2:
-            # cidades = ["TODAS"]
             cidades = list(set(x[9] for x in dadosMotorista if x[9]))
             filCidade = st.multiselect("Cidades de Origem", cidades, placeholder="Selecionar cidades")
-            # if "TODAS" not in filCidade:
             if filCidade:
                 dadosMotorista = [x for x in dadosMotorista if x[9] in filCidade]
 
         col1, col2, col3 = st.columns([2, 2, 1])
         with col1:
-            # funcoes = ["TODAS"]
             funcoes = list(set(x[10] for x in dadosMotorista if x[10]))
             filFuncao = st.multiselect("Funções", funcoes, placeholder="Selecionar funções")
-            # if "TODAS" not in filFuncao:
             if filFuncao:
                 dadosMotorista = [x for x in dadosMotorista if x[10] in filFuncao]
         with col2:
