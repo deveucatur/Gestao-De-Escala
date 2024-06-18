@@ -96,7 +96,6 @@ def fragTabela(dadosMotorista):
             filUnidade = st.multiselect("Unidades", unidades, placeholder="Selecionar unidades")
             if filUnidade:
                 dadosMotorista = [x for x in dadosMotorista if x[8] in filUnidade]
-
         with col2:
             cidades = list(set(x[9] for x in dadosMotorista if x[9]))
             filCidade = st.multiselect("Cidades de Origem", cidades, placeholder="Selecionar cidades")
