@@ -1,0 +1,230 @@
+body{
+    padding: 0;
+    margin: 0;
+    background-color: #bdc3c7;
+}
+
+:root {
+    --header-height: 100px;
+    --header-height-shrink: 50px;
+    --transition-duration: 0.3s;
+}
+
+.cabecalho{
+    margin: 0;
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: height var(--transition-duration) ease;
+}
+
+.cabecalho img{
+    width: 100%;
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    transition: height var(--transition-duration) ease;
+}
+
+.cabecalho .titulo {
+    position: absolute;
+    z-index: 2;
+    color: #240002;
+    text-align: center;
+    background-color: #ff93a1;
+    padding: 5px;
+    border-radius: 16px;
+}
+
+.cabecalho .titulo h1 {
+    margin: 0;
+}
+
+body:has(.cabecalho:sticky + .container) .cabecalho {
+    height: var(--header-height-shrink);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.botaoHome {
+    margin: 10px;
+    text-align: center;
+    background-color: #e6c6c8;
+    padding: 8px;
+    width: 20%;
+    border-radius: 24px;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.botaoHome a {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.botaoHome img {
+    width: 42px;
+    height: 42px;
+}
+
+.botaoHome button {
+    background-color: transparent;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: underline;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.botaoHome:hover{
+    background-color: #e4b3b6;
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.titulo{
+    width: 99%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.titulo hr{
+    flex: 1;
+    border: none;
+    border-top: 3px solid #333;
+    border-radius: 8px;
+    margin: 0 5px;
+}
+
+.titulo p{
+    font-size: 2em;
+    font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: max-content;
+    margin: 0 auto;
+    text-align: center;
+    white-space: nowrap;
+    color: #000;
+}
+
+.tabela{
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tabela::-webkit-scrollbar{
+    width: 5px;
+}
+
+.tabela::-webkit-scrollbar-track{
+    background-color: #dfefff;
+    border-radius: 10px;
+}
+
+.tabela::-webkit-scrollbar-thumb{
+    background-color: #9dacbb;
+    border-radius: 10px;
+}
+
+.tabela::-webkit-scrollbar-thumb:hover{
+    background-color: #819fbd;
+}
+
+.tabela table{
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    background-color: #bfd6ec;
+    border: 1px solid #788da1;
+    border-radius: 16px;
+    color: #000;
+}
+
+.tabela th{
+    background-color: #456c91;
+    color: #ebf6ff;
+    position: sticky;
+    top: 0;
+}
+
+.tabela tr th{
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.tabela tr:nth-child(even){
+    background-color: #a6c7e5;
+}
+
+.tabela tr:hover{
+    background-color: #91a9c0;
+}
+
+.tabela tr td{
+    padding: 10px;
+    border-bottom: 1px solid #4a5a69;
+    text-align: center;
+}
+
+.tabela tr td img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    text-align: center;
+    margin: 0 3px;
+}
+
+.tabela .acao{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+}
+
+.tabela tr td img:hover{
+    transform: scale(1.2);
+}
+
+.tabela tr:first-child th:first-child{
+    border-top-left-radius: 10px;
+}
+
+.tabela tr:first-child th:last-child{
+    border-top-right-radius: 10px;
+}
+
+.tabela tr:last-child td:first-child{
+    border-bottom-left-radius: 10px;
+}
+
+.tabela tr:last-child td:last-child{
+    border-bottom-right-radius: 10px;
+}

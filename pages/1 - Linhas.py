@@ -1,18 +1,21 @@
 import streamlit as st
 import json
-from util import cabecalho
+from util import cabEscala, sideBar
 from datetime import timedelta, datetime
 import pandas as pd
 import copy
 import plotly.figure_factory as ff
 
 st.set_page_config(
-    "Linhas",
+    "Linhas - EscalaMax",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    page_icon="https://raw.githubusercontent.com/RahyanRamos/Imagens.Eucatur/main/logoIcon-EscalaMax.png"
 )
 
-cabecalho("Rodrigo")
+cabEscala()
+sideBar()
+
 with open("documentos/projeto_linhas_horarios.json", "r", encoding="utf-8") as file:
     linhas_dados = json.load(file)
 
