@@ -18,7 +18,7 @@ with col1:
 with col2:
     botaoHome("Motoristas", "https://cdn-icons-png.flaticon.com/128/5283/5283024.png", "http://localhost:8501/Motoristas")
 with col3:
-    botaoHome("Programação de Escalas", "https://cdn-icons-png.flaticon.com/128/1050/1050608.png", "http://localhost:8501/Escalas")
+    botaoHome("Escalas", "https://cdn-icons-png.flaticon.com/128/1050/1050608.png", "http://localhost:8501/Escalas")
 with col4:
     botaoHome("Configurações", "https://cdn-icons-png.flaticon.com/128/1658/1658993.png", "http://localhost:8501/Configura%C3%A7%C3%B5es")
 
